@@ -38,7 +38,9 @@ game.MyStates.loader = {
             game.load.spritesheet('bubing', './images/bubing.png', 256, 283);
             game.load.spritesheet('gongbing', './images/gongbing.png', 213, 190);
             game.load.spritesheet('paobing', './images/paobing.png', 188, 190);
+            game.load.spritesheet('baozha', 'images/baozha.png', 338, 329);
             game.load.image('arrow', './images/arrow.png');
+            game.load.image('boom', './images/boom.png');
             game.load.image('scoreBoard', './images/scoreBoard.png');
             game.load.image('reset', './images/reset.png');
             game.load.image('restart', './images/restart.png');
@@ -88,7 +90,7 @@ game.MyStates.begin = {
         //我的背景
         this.bg = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'background');
         this.scoreBoard = game.add.image(120, 5, "scoreBoard");
-        this.scoreBoardnum = 10;
+        this.scoreBoardnum = 15;
         this.scoreBoardText = game.add.text(205, 45, "x" + this.scoreBoardnum, {
             fill: '#fff',
             fontSize: '40px'
@@ -237,7 +239,7 @@ game.MyStates.begin = {
         if (this.gameFire && now - this.fireTime > 300 && this.enemysG.alive) {
             //敌方小兵射
             var enemyBullet = this.enemyBullets.getFirstExists(false);
-            var math = Math.random() * 50 - 30;
+            var math = Math.random() * 50 + 10;
             if (enemyBullet) {
                 enemyBullet.reset(this.enemysG.x + math, this.enemysG.y + 80);
             } else {
@@ -253,7 +255,7 @@ game.MyStates.begin = {
             //我方小兵射
             if (this.mygongbingB1 && this.mygongbingB1.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB1.x + math, this.mygongbingB1.y - 80);
                 } else {
@@ -268,7 +270,7 @@ game.MyStates.begin = {
             };
             if (this.mygongbingB2 && this.mygongbingB2.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB2.x + math, this.mygongbingB2.y - 80);
                 } else {
@@ -283,7 +285,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB3 && this.mygongbingB3.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB3.x + math, this.mygongbingB3.y - 80);
                 } else {
@@ -298,7 +300,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB4 && this.mygongbingB4.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB4.x + math, this.mygongbingB4.y - 80);
                 } else {
@@ -313,7 +315,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB5 && this.mygongbingB5.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB5.x + math, this.mygongbingB5.y - 80);
                 } else {
@@ -328,7 +330,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB6 && this.mygongbingB6.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB6.x + math, this.mygongbingB6.y - 80);
                 } else {
@@ -343,7 +345,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB7 && this.mygongbingB7.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB7.x + math, this.mygongbingB7.y - 80);
                 } else {
@@ -358,7 +360,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB8 && this.mygongbingB8.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB8.x + math, this.mygongbingB8.y - 80);
                 } else {
@@ -373,7 +375,7 @@ game.MyStates.begin = {
             }
             if (this.mygongbingB9 && this.mygongbingB9.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
-                var math = Math.random() * 50 - 30;
+                var math = Math.random() * 50 + 10;
                 if (myBullet) {
                     myBullet.reset(this.mygongbingB9.x + math, this.mygongbingB9.y - 80);
                 } else {
@@ -381,6 +383,22 @@ game.MyStates.begin = {
                     myBullet.outOfBoundsKill = true;
                     myBullet.checkWorldBounds = true;
                     myBullet.scale.setTo(0.5, 0.5)
+                    this.myBullets.addChild(myBullet);
+                    game.physics.enable(myBullet, Phaser.Physics.ARCADE);
+                }
+                myBullet.body.velocity.y = -100;
+            }
+            // 炮兵
+            if (this.mypaobingB7 && this.mypaobingB7.alive) {
+                var myBullet = this.myBullets.getFirstExists(false);
+                var math = Math.random() * 50 + 20;
+                if (myBullet) {
+                    myBullet.reset(this.mypaobingB7.x + math, this.mypaobingB7.y - 80);
+                } else {
+                    myBullet = game.add.sprite(this.mypaobingB7.x + math, this.mypaobingB7.y - 80, "boom");
+                    myBullet.outOfBoundsKill = true;
+                    myBullet.checkWorldBounds = true;
+                    myBullet.scale.setTo(0.5, 0.5);
                     this.myBullets.addChild(myBullet);
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
@@ -410,25 +428,34 @@ game.MyStates.begin = {
             this.mygongbingGroup.callAll("animations.play", 'animations', "attack");
             this.mybubingGroup.callAll("animations.play", 'animations', "attack");
             this.myqibingGroup.callAll("animations.play", 'animations', "attack");
+            this.mypaobingGroup.callAll("animations.play", 'animations', "attack");
             //敌方和我方碰撞检测
             game.physics.arcade.collide(this.enemyBullets, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemyBullets, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemyBullets, this.mygongbingGroup, this.bingCollisionHandler, null, this);
+            game.physics.arcade.collide(this.enemyBullets, this.mypaobingGroup, this.paocollisioHandler, null, this);
             game.physics.arcade.collide(this.myBullets, this.enemys, this.bingCollisionHandler, null, this);
+
             game.physics.arcade.collide(this.enemysB, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysB, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysB, this.mygongbingGroup, this.bingCollisionHandler, null, this);
+            game.physics.arcade.collide(this.enemysB, this.mypaobingGroup, this.paocollisioHandler, null, this);
+
             game.physics.arcade.collide(this.enemysQ1, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ1, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ1, this.mygongbingGroup, this.bingCollisionHandler, null, this);
+            game.physics.arcade.collide(this.enemysQ1, this.mypaobingGroup, this.paocollisioHandler, null, this);
+
             game.physics.arcade.collide(this.enemysQ2, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ2, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ2, this.mygongbingGroup, this.bingCollisionHandler, null, this);
+            game.physics.arcade.collide(this.enemysQ2, this.mypaobingGroup, this.paocollisioHandler, null, this);
             //我方小兵移动
             game.physics.enable(this.enemys, Phaser.Physics.ARCADE);
             game.physics.enable(this.mybubingGroup, Phaser.Physics.ARCADE);
             game.physics.enable(this.myqibingGroup, Phaser.Physics.ARCADE);
             game.physics.enable(this.mygongbingGroup, Phaser.Physics.ARCADE);
+            game.physics.enable(this.mypaobingGroup, Phaser.Physics.ARCADE);
             // 判断每一块的兵是否存活
             // game.add.tween(this.mybubingGroup.scale).to({ x: .2, y: .2 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
             for (var i = 1; i < 10; i++) {
@@ -499,6 +526,27 @@ game.MyStates.begin = {
             bing.kill();
             enemyBullets.kill();
         }, 1000)
+    },
+    //大炮打到了人
+    paocollisioHandler: function(bullet, enemy) {
+        var x = enemy.x - 20;
+        var y = enemy.y;
+        var sx = enemy.scale.x;
+        var sy = enemy.scale.y;
+        bullet.kill();
+        enemy.kill();
+        var baozha = game.add.sprite(x - (50 * sx), y + (90 * sx), 'baozha');
+        this.bottomGroup.add(baozha);
+        baozha.scale.setTo(sx, sy)
+        baozha.animations.add("flower");
+        baozha.animations.play("flower", 9, false)
+        man_deathTweene = game.add.tween(man_death).to({ alpha: 0 }, 1000, Phaser.Easing.Circular.In, true, 1000);
+        baozhaTweene = game.add.tween(baozha).to({ alpha: 0 }, 1000, Phaser.Easing.Circular.In, true, 1000);
+        console.log(enemy.name)
+        if (enemy.tweenAnimations) {
+            enemy.tweenAnimations.pause();
+        } else { return }
+
     },
     //重置按钮事件
     onResetClick: function() {
@@ -694,7 +742,7 @@ game.MyStates.begin = {
             this.mybubingGroup.callAll("animations.add", "animations", "wait", [6, 7, 8], 6, true);
             this.mybubingGroup.callAll("animations.play", "animations", "wait");
             this.mybubingGroup.setAll("angle", "-90");
-            this.mybubing.x = 480;
+            this.mybubing.x = 400;
             this.mybubing.y = game.height - 115;
             this.mybubing.alpha = 0; //0
         } else {
@@ -877,7 +925,7 @@ game.MyStates.begin = {
             this.mygongbingGroup.callAll("animations.add", "animations", "wait", [5, 6], 6, true);
             this.mygongbingGroup.callAll("animations.play", "animations", "wait");
             this.mygongbingGroup.setAll("angle", "-90");
-            this.mygongbing.x = game.width / 2 - 50;
+            this.mygongbing.x = game.width / 2 - 100;
             this.mygongbing.y = game.height - 115;
             this.mygongbing.alpha = 0; //0
         } else {
@@ -1064,7 +1112,7 @@ game.MyStates.begin = {
             this.myqibingGroup.callAll("animations.add", "animations", "wait", [3, 4], 6, true);
             this.myqibingGroup.callAll("animations.play", "animations", "wait");
             this.myqibingGroup.setAll("angle", "-90");
-            this.myqibing.x = 700;
+            this.myqibing.x = 630;
             this.myqibing.y = game.height - 115;
             this.myqibing.alpha = 0;
         } else {
@@ -1094,8 +1142,8 @@ game.MyStates.begin = {
         this.zhen6 = this.zhens.create(202, 158, "zhen6");
 
         if (this.paobingBtnCan) {
-            if (this.mypaobing.x > this.zhens.x + this.zhen7.x - 50 &&
-                this.mypaobing.x < this.zhens.x + this.zhen7.x + 40 &&
+            if (this.mypaobing.x > this.zhens.x + this.zhen7.x + 50 &&
+                this.mypaobing.x < this.zhens.x + this.zhen7.x + 140 &&
                 this.mypaobing.y > this.zhens.y + this.zhen7.y - 60 &&
                 this.mypaobing.y < this.zhens.y + this.zhen7.y + 20) {
                 this.zhen7.kill();
@@ -1109,13 +1157,13 @@ game.MyStates.begin = {
                     this.mypaobingB7.kill();
                 };
                 this.mypaobingB7 = this.mypaobingGroup.create(this.zhens.x + this.zhen7.x + 10, this.zhens.y + this.zhen7.y - 40 + 20, "paobing");
-                this.mypaobingB7.scale.set(.3, .4);
-                this.mypaobingB7.position.set(500, 500);
+                this.mypaobingB7.scale.set(.4, .4);
+                this.mypaobingB7.position.set(500, 520);
                 this.paobingReady();
                 //阵7里的兵
 
-            } else if (this.mypaobing.x > this.zhens.x + this.zhen8.x - 50 &&
-                this.mypaobing.x < this.zhens.x + this.zhen8.x + 40 &&
+            } else if (this.mypaobing.x > this.zhens.x + this.zhen8.x + 50 &&
+                this.mypaobing.x < this.zhens.x + this.zhen8.x + 140 &&
                 this.mypaobing.y > this.zhens.y + this.zhen8.y - 60 &&
                 this.mypaobing.y < this.zhens.y + this.zhen8.y + 20) {
                 this.zhen8.kill();
@@ -1129,13 +1177,13 @@ game.MyStates.begin = {
                     this.mypaobingB8.kill();
                 };
                 this.mypaobingB8 = this.mypaobingGroup.create(this.zhens.x + this.zhen8.x, this.zhens.y + this.zhen8.y - 40 + 20, "paobing");
-                this.mypaobingB8.scale.set(.3, .4);
-                this.mypaobingB8.position.set(600, 600);
-                this.qibingReady();
+                this.mypaobingB8.scale.set(.4, .4);
+                this.mypaobingB8.position.set(600, 520);
+                this.paobingReady();
                 //阵8里的兵
 
-            } else if (this.mypaobing.x > this.zhens.x + this.zhen9.x - 50 &&
-                this.mypaobing.x < this.zhens.x + this.zhen9.x + 40 &&
+            } else if (this.mypaobing.x > this.zhens.x + this.zhen9.x + 50 &&
+                this.mypaobing.x < this.zhens.x + this.zhen9.x + 140 &&
                 this.mypaobing.y > this.zhens.y + this.zhen9.y - 60 &&
                 this.mypaobing.y < this.zhens.y + this.zhen9.y + 20) {
                 this.zhen9.kill();
@@ -1149,20 +1197,20 @@ game.MyStates.begin = {
                     this.mypaobingB9.kill();
                 };
                 this.mypaobingB9 = this.mypaobingGroup.create(this.zhens.x + this.zhen9.x, this.zhens.y + this.zhen9.y - 40 + 20, "paobing");
-                this.mypaobingB9.scale.set(.3, .4);
-                this.mypaobingB9.position.set(700, 600);
-                this.qibingReady();
+                this.mypaobingB9.scale.set(.4, .4);
+                this.mypaobingB9.position.set(700, 520);
+                this.paobingReady();
                 //阵9里的兵
 
             }
             game.physics.enable(this.mypaobingGroup, Phaser.Physics.ARCADE);
             this.mypaobing.scale.setTo(0.4, 0.5);
-            this.mypaobingGroup.callAll("animations.add", "animations", "attack", [0, 1, 2], 6, true);
-            this.mypaobingGroup.callAll("animations.add", "animations", "wait", [3, 4], 6, true);
+            // this.mypaobingGroup.callAll("animations.add", "animations", "attack", [0, 1, 2], 6, true);
+            // this.mypaobingGroup.callAll("animations.add", "animations", "wait", [3, 4], 6, true);
             this.mypaobingGroup.callAll("animations.play", "animations", "wait");
             // this.mypaobingGroup.setAll("angle", "-90");
-            this.mypaobing.x = 700;
-            this.mypaobing.y = game.height - 115;
+            this.mypaobing.x = 845;
+            this.mypaobing.y = game.height - 130;
             this.mypaobing.alpha = 0;
         } else {
             return false
