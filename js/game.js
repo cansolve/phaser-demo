@@ -33,9 +33,11 @@ game.MyStates.loader = {
             game.load.spritesheet('fire', 'images/fire.png', 171, 242);
             game.load.spritesheet('bubingBtn', './images/bubingBtn.png', 106, 106);
             game.load.spritesheet('qibingBtn', './images/qibingBtn.png', 106, 106);
+            game.load.spritesheet('paobingBtn', './images/paobingBtn.png', 106, 106);
             game.load.spritesheet('qibing', './images/qibing.png', 304, 209);
             game.load.spritesheet('bubing', './images/bubing.png', 256, 283);
             game.load.spritesheet('gongbing', './images/gongbing.png', 213, 190);
+            game.load.spritesheet('paobing', './images/paobing.png', 188, 190);
             game.load.image('arrow', './images/arrow.png');
             game.load.image('scoreBoard', './images/scoreBoard.png');
             game.load.image('reset', './images/reset.png');
@@ -104,8 +106,9 @@ game.MyStates.begin = {
         this.mybubingGroup = game.add.group();
         this.mygongbingGroup = game.add.group();
         this.myqibingGroup = game.add.group();
+        this.mypaobingGroup = game.add.group();
         // 拖拽中步兵
-        this.mybubing = game.add.sprite(480, game.height - 115, "bubing");
+        this.mybubing = game.add.sprite(400, game.height - 115, "bubing");
         this.mybubing.scale.setTo(0.4, 0.4);
         this.mybubing.anchor.setTo(1, 0);
         this.mybubing.alpha = 0;
@@ -113,9 +116,9 @@ game.MyStates.begin = {
         this.mybubing.inputEnabled = true;
         this.mybubing.input.enableDrag(true, true);
         this.mybubing.input.priorityID = 2;
-        this.bubingBtn = game.add.sprite(480, game.height - 110, "bubingBtn");
+        this.bubingBtn = game.add.sprite(400, game.height - 110, "bubingBtn");
         // 拖拽中弓兵
-        this.mygongbing = game.add.sprite(game.width / 2 - 50, game.height - 115, "gongbing");
+        this.mygongbing = game.add.sprite(520, game.height - 115, "gongbing");
         this.mygongbing.scale.setTo(0.4, 0.4);
         this.mygongbing.anchor.setTo(1, 0);
         this.mygongbing.alpha = 0;
@@ -123,10 +126,10 @@ game.MyStates.begin = {
         this.mygongbing.inputEnabled = true;
         this.mygongbing.input.enableDrag(true, true);
         this.mygongbing.input.priorityID = 2;
-        this.gongbingBtn = game.add.sprite(game.width / 2 - 50, game.height - 110, "gongbingBtn");
+        this.gongbingBtn = game.add.sprite(520, game.height - 110, "gongbingBtn");
 
         // 拖拽中骑兵
-        this.myqibing = game.add.sprite(700, game.height - 115, "qibing");
+        this.myqibing = game.add.sprite(game.width / 2, game.height - 115, "qibing");
         this.myqibing.scale.setTo(0.4, 0.4);
         this.myqibing.anchor.setTo(.9, -.1);
         this.myqibing.alpha = 0;
@@ -134,9 +137,20 @@ game.MyStates.begin = {
         this.myqibing.inputEnabled = true;
         this.myqibing.input.enableDrag(true, true);
         this.myqibing.input.priorityID = 2;
-        this.qibingBtn = game.add.sprite(700, game.height - 110, "qibingBtn");
+        this.qibingBtn = game.add.sprite(game.width / 2, game.height - 110, "qibingBtn");
+
+        // 拖拽中炮兵
+        this.mypaobing = game.add.sprite(830, game.height - 115, "paobing");
+        this.mypaobing.scale.setTo(0.4, 0.4);
+        this.mypaobing.anchor.setTo(.9, -.1);
+        this.mypaobing.alpha = 0;
+        this.mypaobing.angle = 0;
+        this.mypaobing.inputEnabled = true;
+        this.mypaobing.input.enableDrag(true, true);
+        this.mypaobing.input.priorityID = 2;
+        this.paobingBtn = game.add.sprite(760, game.height - 110, "paobingBtn");
         // 重置按钮
-        this.reset = game.add.button(820, game.height - 100, "reset", this.onResetClick, this);
+        this.reset = game.add.button(880, game.height - 100, "reset", this.onResetClick, this);
         // 攻击按钮
         this.attack = game.add.button(game.width - 260, game.height - 170, "attack", this.onAttackClick, this);
         // 提示箭头
@@ -167,9 +181,11 @@ game.MyStates.begin = {
         this.buBingScoreNum = 2;
         this.gongBingScoreNum = 2;
         this.qiBingScoreNum = 3;
+        this.paoBingScoreNum = 5;
         this.qibingBtnCan = true;
         this.gongbingBtnCan = true;
         this.bubingBtnCan = true;
+        this.paobingBtnCan = true;
         //敌方弓兵
         this.enemysG = this.enemys.create(game.width / 2 - 5, game.height / 2 - 130, 'gongbing');
         this.enemysG.animations.add("attack", [0, 1, 2, 3, 4], 6, true);
@@ -212,6 +228,9 @@ game.MyStates.begin = {
             //按下骑兵按钮之后
         this.myqibing.events.onInputDown.add(this.qibingDownFunction, this)
         this.myqibing.events.onInputUp.add(this.qibingUpFunction, this)
+            //按下炮兵按钮之后
+        this.mypaobing.events.onInputDown.add(this.paobingDownFunction, this)
+        this.mypaobing.events.onInputUp.add(this.paobingUpFunction, this)
     },
     update: function() {
         var now = game.time.now;
@@ -443,10 +462,16 @@ game.MyStates.begin = {
             } else {
                 this.qibingBtnCan = false;
             };
+            if (this.scoreBoardnum - this.paoBingScoreNum >= 0) {
+                this.paobingBtnCan = true;
+            } else {
+                this.paobingBtnCan = false;
+            };
         } else {
             this.bubingBtnCan = false;
             this.gongbingBtnCan = false;
             this.qibingBtnCan = false;
+            this.paobingBtnCan = false;
         }
         if (!this.bubingBtnCan) {
             this.bubingBtn.frame = 1;
@@ -457,8 +482,11 @@ game.MyStates.begin = {
         if (!this.qibingBtnCan) {
             this.qibingBtn.frame = 1;
         };
+        if (!this.paobingBtnCan) {
+            this.paobingBtn.frame = 1;
+        };
         //胜负判断
-        if (this.gameFire && this.myqibingGroup.countLiving() === 0 && this.mybubingGroup.countLiving() === 0 && this.mygongbingGroup.countLiving() === 0) {
+        if (this.gameFire && this.myqibingGroup.countLiving() === 0 && this.mybubingGroup.countLiving() === 0 && this.mygongbingGroup.countLiving() === 0 && this.mypaobingGroup.countLiving() === 0) {
             game.state.start('lose');
         }
         if (this.gameFire && this.enemys.countLiving() === 0) {
@@ -468,7 +496,6 @@ game.MyStates.begin = {
     },
     bingCollisionHandler: function(bing, enemyBullets) {
         setInterval(function() {
-
             bing.kill();
             enemyBullets.kill();
         }, 1000)
@@ -1044,6 +1071,103 @@ game.MyStates.begin = {
             return false
         }
     },
+
+    //按下鼠标之后炮兵
+    paobingDownFunction: function() {
+        if (this.paobingBtnCan) {
+            for (var i = 1; i < 7; i++) {
+                this[`zhen${i}`].kill();
+            }
+            this.mypaobing.alpha = 1;
+            this.mypaobing.scale.setTo(0.5, 0.5);
+        } else {
+            return false
+        }
+    },
+    // 抬起鼠标之后炮兵
+    paobingUpFunction: function() {
+        this.zhen1 = this.zhens.create(48, 116, "zhen1");
+        this.zhen2 = this.zhens.create(123, 116, "zhen2");
+        this.zhen3 = this.zhens.create(196, 116, "zhen3");
+        this.zhen4 = this.zhens.create(28, 158, "zhen4");
+        this.zhen5 = this.zhens.create(117, 158, "zhen5");
+        this.zhen6 = this.zhens.create(202, 158, "zhen6");
+
+        if (this.paobingBtnCan) {
+            if (this.mypaobing.x > this.zhens.x + this.zhen7.x - 50 &&
+                this.mypaobing.x < this.zhens.x + this.zhen7.x + 40 &&
+                this.mypaobing.y > this.zhens.y + this.zhen7.y - 60 &&
+                this.mypaobing.y < this.zhens.y + this.zhen7.y + 20) {
+                this.zhen7.kill();
+                if (this.myqibingB7) {
+                    this.myqibingB7.kill();
+                } else if (this.mybubingB7) {
+                    this.mybubingB7.kill();
+                } else if (this.mygongbingB7) {
+                    this.mygongbingB7.kill();
+                } else if (this.mypaobingB7) {
+                    this.mypaobingB7.kill();
+                };
+                this.mypaobingB7 = this.mypaobingGroup.create(this.zhens.x + this.zhen7.x + 10, this.zhens.y + this.zhen7.y - 40 + 20, "paobing");
+                this.mypaobingB7.scale.set(.3, .4);
+                this.mypaobingB7.position.set(500, 500);
+                this.paobingReady();
+                //阵7里的兵
+
+            } else if (this.mypaobing.x > this.zhens.x + this.zhen8.x - 50 &&
+                this.mypaobing.x < this.zhens.x + this.zhen8.x + 40 &&
+                this.mypaobing.y > this.zhens.y + this.zhen8.y - 60 &&
+                this.mypaobing.y < this.zhens.y + this.zhen8.y + 20) {
+                this.zhen8.kill();
+                if (this.myqibingB8) {
+                    this.myqibingB8.kill();
+                } else if (this.mybubingB8) {
+                    this.mybubingB8.kill();
+                } else if (this.mygongbingB8) {
+                    this.mygongbingB8.kill();
+                } else if (this.mypaobingB8) {
+                    this.mypaobingB8.kill();
+                };
+                this.mypaobingB8 = this.mypaobingGroup.create(this.zhens.x + this.zhen8.x, this.zhens.y + this.zhen8.y - 40 + 20, "paobing");
+                this.mypaobingB8.scale.set(.3, .4);
+                this.mypaobingB8.position.set(600, 600);
+                this.qibingReady();
+                //阵8里的兵
+
+            } else if (this.mypaobing.x > this.zhens.x + this.zhen9.x - 50 &&
+                this.mypaobing.x < this.zhens.x + this.zhen9.x + 40 &&
+                this.mypaobing.y > this.zhens.y + this.zhen9.y - 60 &&
+                this.mypaobing.y < this.zhens.y + this.zhen9.y + 20) {
+                this.zhen9.kill();
+                if (this.myqibingB9) {
+                    this.myqibingB9.kill();
+                } else if (this.mybubingB9) {
+                    this.mybubingB9.kill();
+                } else if (this.mygongbingB9) {
+                    this.mygongbingB9.kill();
+                } else if (this.mypaobingB9) {
+                    this.mypaobingB9.kill();
+                };
+                this.mypaobingB9 = this.mypaobingGroup.create(this.zhens.x + this.zhen9.x, this.zhens.y + this.zhen9.y - 40 + 20, "paobing");
+                this.mypaobingB9.scale.set(.3, .4);
+                this.mypaobingB9.position.set(700, 600);
+                this.qibingReady();
+                //阵9里的兵
+
+            }
+            game.physics.enable(this.mypaobingGroup, Phaser.Physics.ARCADE);
+            this.mypaobing.scale.setTo(0.4, 0.5);
+            this.mypaobingGroup.callAll("animations.add", "animations", "attack", [0, 1, 2], 6, true);
+            this.mypaobingGroup.callAll("animations.add", "animations", "wait", [3, 4], 6, true);
+            this.mypaobingGroup.callAll("animations.play", "animations", "wait");
+            // this.mypaobingGroup.setAll("angle", "-90");
+            this.mypaobing.x = 700;
+            this.mypaobing.y = game.height - 115;
+            this.mypaobing.alpha = 0;
+        } else {
+            return false
+        }
+    },
     // 步兵放置完能量扣除
     bubingReady: function() {
         this.scoreBoardnum -= 2;
@@ -1059,6 +1183,12 @@ game.MyStates.begin = {
     // 骑兵放置完能量扣除
     qibingReady: function() {
         this.scoreBoardnum -= 3;
+        this.scoreBoardText.text = "x" + this.scoreBoardnum;
+        this.addQuake();
+    },
+    // 炮兵放置完能量扣除
+    paobingReady: function() {
+        this.scoreBoardnum -= 5;
         this.scoreBoardText.text = "x" + this.scoreBoardnum;
         this.addQuake();
     },
