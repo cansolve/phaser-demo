@@ -29,8 +29,8 @@ game.MyStates.loader = {
             preloadSprite.scale.setTo(2, 2)
             game.load.image('background', './images/bg.jpg');
             game.load.image('bg2', './images/bg2.jpg');
-            game.load.spritesheet('gongbingBtn', './images/gongbingBtn.png', 106, 106);
             game.load.spritesheet('fire', 'images/fire.png', 171, 242);
+            game.load.spritesheet('gongbingBtn', './images/gongbingBtn.png', 106, 106);
             game.load.spritesheet('bubingBtn', './images/bubingBtn.png', 106, 106);
             game.load.spritesheet('qibingBtn', './images/qibingBtn.png', 106, 106);
             game.load.spritesheet('paobingBtn', './images/paobingBtn.png', 106, 106);
@@ -103,6 +103,7 @@ game.MyStates.begin = {
         this.zhens = game.add.group();
         this.enemys = game.add.group();
         this.myBullets = game.add.group();
+        this.mypaoBullets = game.add.group();
         this.enemyBullets = game.add.group();
         this.enemys = game.add.group();
         this.mybubingGroup = game.add.group();
@@ -390,22 +391,24 @@ game.MyStates.begin = {
             }
             // 炮兵
             if (this.mypaobingB7 && this.mypaobingB7.alive) {
-                var myBullet = this.myBullets.getFirstExists(false);
+                var myBullet = this.mypaoBullets.getFirstExists(false);
                 var math = Math.random() * 50 + 20;
                 if (myBullet) {
-                    myBullet.reset(this.mypaobingB7.x + math, this.mypaobingB7.y - 80);
+                    myBullet.reset(this.mypaobingB7.x + math, this.mypaobingB7.y);
                 } else {
-                    myBullet = game.add.sprite(this.mypaobingB7.x + math, this.mypaobingB7.y - 80, "boom");
+                    myBullet = game.add.sprite(this.mypaobingB7.x + math, this.mypaobingB7.y, "boom");
                     myBullet.outOfBoundsKill = true;
                     myBullet.checkWorldBounds = true;
                     myBullet.scale.setTo(0.5, 0.5);
-                    this.myBullets.addChild(myBullet);
+                    myBullet.angle = 180;
+                    this.mypaoBullets.addChild(myBullet);
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
-                myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.y = -150;
+                myBullet.body.velocity.x = 20;
             }
             if (this.mypaobingB8 && this.mypaobingB8.alive) {
-                var myBullet = this.myBullets.getFirstExists(false);
+                var myBullet = this.mypaoBullets.getFirstExists(false);
                 var math = Math.random() * 50 + 20;
                 if (myBullet) {
                     myBullet.reset(this.mypaobingB8.x + math, this.mypaobingB8.y - 80);
@@ -413,14 +416,15 @@ game.MyStates.begin = {
                     myBullet = game.add.sprite(this.mypaobingB8.x + math, this.mypaobingB8.y - 80, "boom");
                     myBullet.outOfBoundsKill = true;
                     myBullet.checkWorldBounds = true;
-                    myBullet.scale.setTo(0.5, 0.5)
-                    this.myBullets.addChild(myBullet);
+                    myBullet.scale.setTo(0.5, 0.5);
+                    myBullet.angle = 180;
+                    this.mypaoBullets.addChild(myBullet);
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
-                myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.y = -150;
             }
             if (this.mypaobingB9 && this.mypaobingB9.alive) {
-                var myBullet = this.myBullets.getFirstExists(false);
+                var myBullet = this.mypaoBullets.getFirstExists(false);
                 var math = Math.random() * 50 + 20;
                 if (myBullet) {
                     myBullet.reset(this.mypaobingB9.x + math, this.mypaobingB9.y - 80);
@@ -428,11 +432,13 @@ game.MyStates.begin = {
                     myBullet = game.add.sprite(this.mypaobingB9.x + math, this.mypaobingB9.y - 80, "boom");
                     myBullet.outOfBoundsKill = true;
                     myBullet.checkWorldBounds = true;
-                    myBullet.scale.setTo(0.5, 0.5)
-                    this.myBullets.addChild(myBullet);
+                    myBullet.scale.setTo(0.5, 0.5);
+                    myBullet.angle = 180;
+                    this.mypaoBullets.addChild(myBullet);
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
-                myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.y = -150;
+                myBullet.body.velocity.x = -20;
             }
             this.fireTime = now;
         }
@@ -465,7 +471,7 @@ game.MyStates.begin = {
             game.physics.arcade.collide(this.enemyBullets, this.mygongbingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemyBullets, this.mypaobingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.myBullets, this.enemys, this.bingCollisionHandler, null, this);
-            game.physics.arcade.collide(this.bullet, this.enemy, this.paocollisioHandler, null, this);
+            game.physics.arcade.collide(this.mypaoBullets, this.enemys, this.paocollisioHandler, null, this);
 
             game.physics.arcade.collide(this.enemysB, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysB, this.myqibingGroup, this.bingCollisionHandler, null, this);
@@ -558,23 +564,23 @@ game.MyStates.begin = {
             enemyBullets.kill();
         }, 1000)
     },
-    paocollisioHandler: function(bullet, enemy) {
-        var x = enemyBullets.x - 20;
-        var y = enemyBullets.y;
-        var sx = enemyBullets.scale.x;
-        var sy = enemyBullets.scale.y;
-        bing.kill();
-        enemyBullets.kill();
+    paocollisioHandler: function(mypaoBullets, enemys) {
+        var x = enemys.x - 20;
+        var y = enemys.y;
+        var sx = enemys.scale.x;
+        var sy = enemys.scale.y;
+        mypaoBullets.kill();
+        enemys.kill();
         //添加层级组
         this.bottomGroup = game.add.group();
-        var baozha = game.add.sprite(x - (50 * sx), y + (90 * sx), 'bomm_fire');
+        var baozha = game.add.sprite(x - (50 * sx), 260, 'bomm_fire');
         this.bottomGroup.add(baozha);
-        baozha.scale.setTo(sx, sy);
+        baozha.scale.setTo(sx * 2, sy * 2);
         baozha.animations.add("flower");
         baozha.animations.play("flower", 9, false)
         baozhaTweene = game.add.tween(baozha).to({ alpha: 0 }, 1000, Phaser.Easing.Circular.In, true, 1000);
-        if (enemyBullets.tweenAnimations) {
-            enemyBullets.tweenAnimations.pause();
+        if (enemys.tweenAnimations) {
+            enemys.tweenAnimations.pause();
         } else { return }
 
     },
@@ -1298,9 +1304,11 @@ game.MyStates.win = {
             fill: '#fff',
             fontSize: '40px'
         });
-        this.bubingBtn = game.add.sprite(480, game.height - 110, "bubingBtn");
-        this.gongbingBtn = game.add.sprite(game.width / 2 - 50, game.height - 110, "gongbingBtn");
-        this.qibingBtn = game.add.sprite(700, game.height - 110, "qibingBtn");
+
+        this.bubingBtn = game.add.sprite(400, game.height - 110, "bubingBtn");
+        this.gongbingBtn = game.add.sprite(520, game.height - 110, "gongbingBtn");
+        this.qibingBtn = game.add.sprite(game.width / 2, game.height - 110, "qibingBtn");
+        this.paobingBtn = game.add.sprite(760, game.height - 110, "paobingBtn");
         this.attack = game.add.button(game.width - 260, game.height - 170, "attack", this.onAttackClick, this);
         this.zhens = game.add.group();
         this.zhen1 = this.zhens.create(48, 116, "zhen1");
@@ -1336,9 +1344,10 @@ game.MyStates.lose = {
             fontSize: '40px'
         });
 
-        this.bubingBtn = game.add.sprite(480, game.height - 110, "bubingBtn");
-        this.gongbingBtn = game.add.sprite(game.width / 2 - 50, game.height - 110, "gongbingBtn");
-        this.qibingBtn = game.add.sprite(700, game.height - 110, "qibingBtn");
+        this.bubingBtn = game.add.sprite(400, game.height - 110, "bubingBtn");
+        this.gongbingBtn = game.add.sprite(520, game.height - 110, "gongbingBtn");
+        this.qibingBtn = game.add.sprite(game.width / 2, game.height - 110, "qibingBtn");
+        this.paobingBtn = game.add.sprite(760, game.height - 110, "paobingBtn");
         this.attack = game.add.button(game.width - 260, game.height - 170, "attack", this.onAttackClick, this);
         this.zhens = game.add.group();
         this.zhen1 = this.zhens.create(48, 116, "zhen1");
