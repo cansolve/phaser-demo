@@ -38,7 +38,7 @@ game.MyStates.loader = {
             game.load.spritesheet('bubing', './images/bubing.png', 256, 283);
             game.load.spritesheet('gongbing', './images/gongbing.png', 213, 190);
             game.load.spritesheet('paobing', './images/paobing.png', 188, 190);
-            game.load.spritesheet('baozha', 'images/baozha.png', 338, 329);
+            game.load.spritesheet('bomm_fire', 'images/bomm_fire.png', 338, 329);
             game.load.image('arrow', './images/arrow.png');
             game.load.image('boom', './images/boom.png');
             game.load.image('scoreBoard', './images/scoreBoard.png');
@@ -404,6 +404,36 @@ game.MyStates.begin = {
                 }
                 myBullet.body.velocity.y = -100;
             }
+            if (this.mypaobingB8 && this.mypaobingB8.alive) {
+                var myBullet = this.myBullets.getFirstExists(false);
+                var math = Math.random() * 50 + 20;
+                if (myBullet) {
+                    myBullet.reset(this.mypaobingB8.x + math, this.mypaobingB8.y - 80);
+                } else {
+                    myBullet = game.add.sprite(this.mypaobingB8.x + math, this.mypaobingB8.y - 80, "boom");
+                    myBullet.outOfBoundsKill = true;
+                    myBullet.checkWorldBounds = true;
+                    myBullet.scale.setTo(0.5, 0.5)
+                    this.myBullets.addChild(myBullet);
+                    game.physics.enable(myBullet, Phaser.Physics.ARCADE);
+                }
+                myBullet.body.velocity.y = -100;
+            }
+            if (this.mypaobingB9 && this.mypaobingB9.alive) {
+                var myBullet = this.myBullets.getFirstExists(false);
+                var math = Math.random() * 50 + 20;
+                if (myBullet) {
+                    myBullet.reset(this.mypaobingB9.x + math, this.mypaobingB9.y - 80);
+                } else {
+                    myBullet = game.add.sprite(this.mypaobingB9.x + math, this.mypaobingB9.y - 80, "boom");
+                    myBullet.outOfBoundsKill = true;
+                    myBullet.checkWorldBounds = true;
+                    myBullet.scale.setTo(0.5, 0.5)
+                    this.myBullets.addChild(myBullet);
+                    game.physics.enable(myBullet, Phaser.Physics.ARCADE);
+                }
+                myBullet.body.velocity.y = -100;
+            }
             this.fireTime = now;
         }
         if (this.gameFire) {
@@ -433,23 +463,24 @@ game.MyStates.begin = {
             game.physics.arcade.collide(this.enemyBullets, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemyBullets, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemyBullets, this.mygongbingGroup, this.bingCollisionHandler, null, this);
-            game.physics.arcade.collide(this.enemyBullets, this.mypaobingGroup, this.paocollisioHandler, null, this);
+            game.physics.arcade.collide(this.enemyBullets, this.mypaobingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.myBullets, this.enemys, this.bingCollisionHandler, null, this);
+            game.physics.arcade.collide(this.bullet, this.enemy, this.paocollisioHandler, null, this);
 
             game.physics.arcade.collide(this.enemysB, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysB, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysB, this.mygongbingGroup, this.bingCollisionHandler, null, this);
-            game.physics.arcade.collide(this.enemysB, this.mypaobingGroup, this.paocollisioHandler, null, this);
+            game.physics.arcade.collide(this.enemysB, this.mypaobingGroup, this.bingCollisionHandler, null, this);
 
             game.physics.arcade.collide(this.enemysQ1, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ1, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ1, this.mygongbingGroup, this.bingCollisionHandler, null, this);
-            game.physics.arcade.collide(this.enemysQ1, this.mypaobingGroup, this.paocollisioHandler, null, this);
+            game.physics.arcade.collide(this.enemysQ1, this.mypaobingGroup, this.bingCollisionHandler, null, this);
 
             game.physics.arcade.collide(this.enemysQ2, this.mybubingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ2, this.myqibingGroup, this.bingCollisionHandler, null, this);
             game.physics.arcade.collide(this.enemysQ2, this.mygongbingGroup, this.bingCollisionHandler, null, this);
-            game.physics.arcade.collide(this.enemysQ2, this.mypaobingGroup, this.paocollisioHandler, null, this);
+            game.physics.arcade.collide(this.enemysQ2, this.mypaobingGroup, this.bingCollisionHandler, null, this);
             //我方小兵移动
             game.physics.enable(this.enemys, Phaser.Physics.ARCADE);
             game.physics.enable(this.mybubingGroup, Phaser.Physics.ARCADE);
@@ -527,24 +558,23 @@ game.MyStates.begin = {
             enemyBullets.kill();
         }, 1000)
     },
-    //大炮打到了人
     paocollisioHandler: function(bullet, enemy) {
-        var x = enemy.x - 20;
-        var y = enemy.y;
-        var sx = enemy.scale.x;
-        var sy = enemy.scale.y;
-        bullet.kill();
-        enemy.kill();
-        var baozha = game.add.sprite(x - (50 * sx), y + (90 * sx), 'baozha');
+        var x = enemyBullets.x - 20;
+        var y = enemyBullets.y;
+        var sx = enemyBullets.scale.x;
+        var sy = enemyBullets.scale.y;
+        bing.kill();
+        enemyBullets.kill();
+        //添加层级组
+        this.bottomGroup = game.add.group();
+        var baozha = game.add.sprite(x - (50 * sx), y + (90 * sx), 'bomm_fire');
         this.bottomGroup.add(baozha);
-        baozha.scale.setTo(sx, sy)
+        baozha.scale.setTo(sx, sy);
         baozha.animations.add("flower");
         baozha.animations.play("flower", 9, false)
-        man_deathTweene = game.add.tween(man_death).to({ alpha: 0 }, 1000, Phaser.Easing.Circular.In, true, 1000);
         baozhaTweene = game.add.tween(baozha).to({ alpha: 0 }, 1000, Phaser.Easing.Circular.In, true, 1000);
-        console.log(enemy.name)
-        if (enemy.tweenAnimations) {
-            enemy.tweenAnimations.pause();
+        if (enemyBullets.tweenAnimations) {
+            enemyBullets.tweenAnimations.pause();
         } else { return }
 
     },
