@@ -313,6 +313,7 @@ game.MyStates.begin = {
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
                 myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.x = 10;
             }
             if (this.mygongbingB5 && this.mygongbingB5.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
@@ -343,6 +344,7 @@ game.MyStates.begin = {
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
                 myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.x = -10;
             }
             if (this.mygongbingB7 && this.mygongbingB7.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
@@ -358,6 +360,7 @@ game.MyStates.begin = {
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
                 myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.x = 20;
             }
             if (this.mygongbingB8 && this.mygongbingB8.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
@@ -388,6 +391,7 @@ game.MyStates.begin = {
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
                 myBullet.body.velocity.y = -100;
+                myBullet.body.velocity.x = -20;
             }
             // 炮兵
             if (this.mypaobingB7 && this.mypaobingB7.alive) {
@@ -406,6 +410,7 @@ game.MyStates.begin = {
                 }
                 myBullet.body.velocity.y = -150;
                 myBullet.body.velocity.x = 20;
+                game.add.tween(myBullet.scale).to({ x: .2, y: .2 }, 2000, Phaser.Easing.Linear.None, true, 0, 2000, true);
             }
             if (this.mypaobingB8 && this.mypaobingB8.alive) {
                 var myBullet = this.mypaoBullets.getFirstExists(false);
@@ -422,6 +427,7 @@ game.MyStates.begin = {
                     game.physics.enable(myBullet, Phaser.Physics.ARCADE);
                 }
                 myBullet.body.velocity.y = -150;
+                game.add.tween(myBullet.scale).to({ x: .2, y: .2 }, 2000, Phaser.Easing.Linear.None, true, 0, 2000, true);
             }
             if (this.mypaobingB9 && this.mypaobingB9.alive) {
                 var myBullet = this.mypaoBullets.getFirstExists(false);
@@ -439,6 +445,7 @@ game.MyStates.begin = {
                 }
                 myBullet.body.velocity.y = -150;
                 myBullet.body.velocity.x = -20;
+                game.add.tween(myBullet.scale).to({ x: .2, y: .2 }, 2000, Phaser.Easing.Linear.None, true, 0, 2000, true);
             }
             this.fireTime = now;
         }
@@ -450,8 +457,10 @@ game.MyStates.begin = {
             game.physics.enable(this.mygongbingGroup, Phaser.Physics.ARCADE);
             this.enemysB.body.velocity.y = 30;
             this.enemysQ1.body.velocity.y = 30;
+            this.enemysQ1.body.velocity.x = -20;
             this.enemysQ2.body.velocity.y = 30;
-            game.add.tween(this.enemysB.scale).to({ x: .4, y: .4 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
+            this.enemysQ2.body.velocity.x = 20;
+            game.add.tween(this.enemysB.scale).to({ x: .5, y: .5 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
             game.add.tween(this.enemysQ1.scale).to({ x: .4, y: .4 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
             game.add.tween(this.enemysQ2.scale).to({ x: .4, y: .4 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
             // this.enemysQ2.scale.set(.7, .7);
@@ -494,11 +503,10 @@ game.MyStates.begin = {
             game.physics.enable(this.mygongbingGroup, Phaser.Physics.ARCADE);
             game.physics.enable(this.mypaobingGroup, Phaser.Physics.ARCADE);
             // 判断每一块的兵是否存活
-            // game.add.tween(this.mybubingGroup.scale).to({ x: .2, y: .2 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
             for (var i = 1; i < 10; i++) {
                 this[`mybubingB${i}`] && this[`mybubingB${i}`].alive ? this[`mybubingB${i}`].body.velocity.y = -100 : 0;
                 if (this[`mybubingB${i}`] && this[`mybubingB${i}`].alive && this[`mybubingB${i}`].top < 280) {
-                    game.add.tween(this[`mybubingB${i}`].scale).to({ x: .4, y: .4 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
+                    game.add.tween(this[`mybubingB${i}`].scale).to({ x: .2, y: .2 }, 2000, Phaser.Easing.Linear.None, true, 0, 1, false);
                     this[`mybubingB${i}`].body.velocity.y = 0;
                 }
             }
@@ -732,6 +740,8 @@ game.MyStates.begin = {
                     this.myqibingB7.kill();
                 } else if (this.mybubingB7) {
                     this.mybubingB7.kill();
+                } else if (this.mypaobingB7) {
+                    this.mypaobingB7.kill();
                 };
                 this.mybubingB7 = this.mybubingGroup.create(this.zhens.x + this.zhen7.x + 10, this.zhens.y + this.zhen7.y - 40 + 20, "bubing");
                 //阵7里的兵
@@ -749,6 +759,8 @@ game.MyStates.begin = {
                     this.myqibingB8.kill();
                 } else if (this.mybubingB8) {
                     this.mybubingB8.kill();
+                } else if (this.mypaobingB8) {
+                    this.mypaobingB8.kill();
                 };
                 this.mybubingB8 = this.mybubingGroup.create(this.zhens.x + this.zhen8.x, this.zhens.y + this.zhen8.y - 40 + 20, "bubing");
                 //阵8里的兵
@@ -766,6 +778,8 @@ game.MyStates.begin = {
                     this.myqibingB9.kill();
                 } else if (this.mybubingB9) {
                     this.mybubingB9.kill();
+                } else if (this.mypaobingB9) {
+                    this.mypaobingB9.kill();
                 };
                 this.mybubingB9 = this.mybubingGroup.create(this.zhens.x + this.zhen9.x, this.zhens.y + this.zhen9.y - 40 + 20, "bubing");
                 //阵9里的兵
@@ -914,6 +928,8 @@ game.MyStates.begin = {
                     this.myqibingB7.kill();
                 } else if (this.mygongbingB7) {
                     this.mygongbingB7.kill();
+                } else if (this.mypaobingB7) {
+                    this.mypaobingB7.kill();
                 };
                 this.mygongbingB7 = this.mygongbingGroup.create(this.zhens.x + this.zhen7.x + 30, this.zhens.y + this.zhen7.y - 40 + 30, "gongbing");
                 this.mygongbingB7.scale.set(.4, .5);
@@ -932,6 +948,8 @@ game.MyStates.begin = {
                     this.myqibingB8.kill();
                 } else if (this.mygongbingB8) {
                     this.mygongbingB8.kill();
+                } else if (this.mypaobingB8) {
+                    this.mypaobingB8.kill();
                 };
                 this.mygongbingB8 = this.mygongbingGroup.create(this.zhens.x + this.zhen8.x + 20, this.zhens.y + this.zhen8.y - 40 + 30, "gongbing");
                 this.mygongbingB8.scale.set(.4, .5);
@@ -949,6 +967,8 @@ game.MyStates.begin = {
                     this.myqibingB9.kill();
                 } else if (this.mygongbingB9) {
                     this.mygongbingB9.kill();
+                } else if (this.mypaobingB9) {
+                    this.mypaobingB9.kill();
                 };
                 this.mygongbingB9 = this.mygongbingGroup.create(this.zhens.x + this.zhen9.x + 20, this.zhens.y + this.zhen9.y - 40 + 30, "gongbing");
                 this.mygongbingB9.scale.set(.4, .5);
@@ -1098,6 +1118,8 @@ game.MyStates.begin = {
                     this.mybubingB7.kill();
                 } else if (this.mygongbingB7) {
                     this.mygongbingB7.kill();
+                } else if (this.mypaobingB7) {
+                    this.mypaobingB7.kill();
                 };
                 this.myqibingB7 = this.myqibingGroup.create(this.zhens.x + this.zhen7.x + 10, this.zhens.y + this.zhen7.y - 40 + 20, "qibing");
                 this.myqibingB7.scale.set(.3, .4);
@@ -1116,6 +1138,8 @@ game.MyStates.begin = {
                     this.mybubingB8.kill();
                 } else if (this.mygongbingB8) {
                     this.mygongbingB8.kill();
+                } else if (this.mypaobingB8) {
+                    this.mypaobingB8.kill();
                 };
                 this.myqibingB8 = this.myqibingGroup.create(this.zhens.x + this.zhen8.x, this.zhens.y + this.zhen8.y - 40 + 20, "qibing");
                 this.myqibingB8.scale.set(.3, .4);
@@ -1134,6 +1158,8 @@ game.MyStates.begin = {
                     this.mybubingB9.kill();
                 } else if (this.mygongbingB9) {
                     this.mygongbingB9.kill();
+                } else if (this.mypaobingB9) {
+                    this.mypaobingB9.kill();
                 };
                 this.myqibingB9 = this.myqibingGroup.create(this.zhens.x + this.zhen9.x, this.zhens.y + this.zhen9.y - 40 + 20, "qibing");
                 this.myqibingB9.scale.set(.3, .4);
