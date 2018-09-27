@@ -535,7 +535,7 @@ game.MyStates.begin = {
                 this.qibingBtnCan = false;
             };
             if (this.scoreBoardnum - this.paoBingScoreNum >= 0) {
-                this.paobingBtnCan = true;
+                this.paobingBtnCan = false;
             } else {
                 this.paobingBtnCan = false;
             };
