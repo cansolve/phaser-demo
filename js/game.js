@@ -89,9 +89,12 @@ game.MyStates.begin = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //我的背景
         this.bg = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'background');
-        this.scoreBoard = game.add.image(120, 5, "scoreBoard");
+        // var bgchange = game.add.sprite(550, -50, 'background');
+        // bgchange.animations.add('bgchange');
+        // bgchange.animations.play('bgchange', 2, true);
+        this.scoreBoard = game.add.image(280, 5, "scoreBoard");
         this.scoreBoardnum = 15;
-        this.scoreBoardText = game.add.text(205, 45, "x" + this.scoreBoardnum, {
+        this.scoreBoardText = game.add.text(365, 45, "x" + this.scoreBoardnum, {
             fill: '#fff',
             fontSize: '40px'
         });
