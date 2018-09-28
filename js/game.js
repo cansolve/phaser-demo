@@ -157,17 +157,17 @@ game.MyStates.begin = {
         // 攻击按钮
         this.attack = game.add.button(game.width - 260, game.height - 170, "attack", this.onAttackClick, this);
         // 提示箭头
-        // this.arrowLight = game.add.image(game.width / 2 - 80, game.height - 280, "arrowLight")
-        // 提示手势
-        // this.hand = game.add.image(490, game.height - 55 - 20, "hand")
-        // game.add.tween(this.arrowLight).to({
-        //     alpha: 0
-        // }, 800, null, true, 0, Number.MAX_VALUE, true)
-        // game.add.tween(this.hand).to({
-        //         x: game.width - 640,
-        //         y: game.height - 280
-        //     }, 800, null, true, 0, Number.MAX_VALUE, true)
-        // 阵型位置
+        this.arrowLight = game.add.image(game.width / 2 - 80, game.height - 280, "arrowLight")
+            // 提示手势
+        this.hand = game.add.image(490, game.height - 55 - 20, "hand")
+        game.add.tween(this.arrowLight).to({
+            alpha: 0
+        }, 800, null, true, 0, Number.MAX_VALUE, true)
+        game.add.tween(this.hand).to({
+                x: game.width - 640,
+                y: game.height - 280
+            }, 800, null, true, 0, Number.MAX_VALUE, true)
+            // 阵型位置
         this.zhen1 = this.zhens.create(48, 116, "zhen1");
         this.zhen2 = this.zhens.create(123, 116, "zhen2");
         this.zhen3 = this.zhens.create(196, 116, "zhen3");
@@ -252,7 +252,7 @@ game.MyStates.begin = {
                 this.enemyBullets.addChild(enemyBullet);
                 game.physics.enable(enemyBullet, Phaser.Physics.ARCADE);
             }
-            enemyBullet.body.velocity.y = 30;
+            enemyBullet.body.velocity.y = 100;
             //我方小兵射
             if (this.mygongbingB1 && this.mygongbingB1.alive) {
                 var myBullet = this.myBullets.getFirstExists(false);
@@ -535,7 +535,7 @@ game.MyStates.begin = {
                 this.qibingBtnCan = false;
             };
             if (this.scoreBoardnum - this.paoBingScoreNum >= 0) {
-                this.paobingBtnCan = false;
+                this.paobingBtnCan = true;
             } else {
                 this.paobingBtnCan = false;
             };
@@ -612,8 +612,8 @@ game.MyStates.begin = {
     },
     //按下鼠标之后
     startGame: function() {
-        // this.arrowLight.kill();
-        // this.hand.kill();
+        this.arrowLight.kill();
+        this.hand.kill();
     },
     //按下鼠标之后
     bubingDownFunction: function() {
